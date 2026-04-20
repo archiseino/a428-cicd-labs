@@ -1,0 +1,109 @@
+Started by user Dicoding Indonesia
+Obtained Jenkinsfile from git https://github.com/archiseino/a428-cicd-labs.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/submission-cicd-pipeline-archise1
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/archiseino/a428-cicd-labs.git
+ > git init /var/jenkins_home/workspace/submission-cicd-pipeline-archise1 # timeout=10
+Fetching upstream changes from https://github.com/archiseino/a428-cicd-labs.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/archiseino/a428-cicd-labs.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/archiseino/a428-cicd-labs.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/react-app^{commit} # timeout=10
+Checking out Revision 5d3571787aaee5ff8a565524bcf023f20da24a30 (refs/remotes/origin/react-app)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 5d3571787aaee5ff8a565524bcf023f20da24a30 # timeout=10
+Commit message: "update: update jenkins"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . node:lts-alpine
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins seems to be running inside container d50e295c4d5766d4eb1431ac15b7adc934e06ae57ac1033f5f7b882f55f4628b
+but /var/jenkins_home/workspace/submission-cicd-pipeline-archise1 could not be found among []
+but /var/jenkins_home/workspace/submission-cicd-pipeline-archise1@tmp could not be found among []
+$ docker run -t -d -u 1000:1000 -w /var/jenkins_home/workspace/submission-cicd-pipeline-archise1 -v /var/jenkins_home/workspace/submission-cicd-pipeline-archise1:/var/jenkins_home/workspace/submission-cicd-pipeline-archise1:rw,z -v /var/jenkins_home/workspace/submission-cicd-pipeline-archise1@tmp:/var/jenkins_home/workspace/submission-cicd-pipeline-archise1@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** node:lts-alpine cat
+$ docker top f975e6c953be81179e35075ffc4cc6b4543e240a279981a32a6d4f4cc554a5a8 -eo pid,comm
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] sh
++ npm install
+
+added 260 packages, and audited 261 packages in 53s
+
+82 packages are looking for funding
+  run `npm fund` for details
+
+4 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] sh
++ ./jenkins/scripts/test.sh
+The following "npm" command (if executed) installs the "cross-env"
+dependency into the local "node_modules" directory, which will ultimately
+be stored in the Jenkins home directory. As described in
+https://docs.npmjs.com/cli/install, the "--save-dev" flag causes the
+"cross-env" dependency to be installed as "devDependencies". For the
+purposes of this tutorial, this flag is not important. However, when
+installing this dependency, it would typically be done so using this
+flag. For a comprehensive explanation about "devDependencies", see
+https://stackoverflow.com/questions/18875674/whats-the-difference-between-dependencies-devdependencies-and-peerdependencies.
++ set +x
+The following "npm" command tests that your simple Node.js/React
+application renders satisfactorily. This command actually invokes the test
+runner Jest (https://facebook.github.io/jest/).
++ npm test
+
+> my-app@0.1.0 test
+> vitest --run
+
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90m/var/jenkins_home/workspace/submission-cicd-pipeline-archise1[39m
+
+ [32m✓[39m src/App.test.jsx [2m ([22m[2m1 test[22m[2m)[22m[90m 170[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m   Start at [22m 19:24:06
+[2m   Duration [22m 6.65s[2m (transform 201ms, setup 156ms, collect 418ms, tests 170ms, environment 4.40s, prepare 581ms)[22m
+
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+$ docker stop --time=1 f975e6c953be81179e35075ffc4cc6b4543e240a279981a32a6d4f4cc554a5a8
+$ docker rm -f --volumes f975e6c953be81179e35075ffc4cc6b4543e240a279981a32a6d4f4cc554a5a8
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
