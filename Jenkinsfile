@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'node:16-buster-slim' 
-            args '-p 3000:3000' 
+            image 'node:lts-alpine' 
+            // args '-p 3000:3000' Commented out as we are not running the application in this pipeline, just building it. 
         }
     }
     stages {
