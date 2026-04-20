@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:lts-alpine' 
-            // args '-p 3000:3000' Commented out as we are not running the application in this pipeline, just building it. 
+            // args '-p 3000:3000' 3000 it seems it this port being used by docker and wsl?
         }
     }
     stages {
